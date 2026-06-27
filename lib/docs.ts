@@ -89,7 +89,8 @@ export function getAllDocsList(): DocMetadata[] {
 
 export function getDocData(slugParts: string[]): DocData | null {
   ensureDocsDir();
-  const relativePath = slugParts.join(path.sep) + '.md';
+  const decodedParts = slugParts.map(decodeURIComponent);
+  const relativePath = decodedParts.join(path.sep) + '.md';
   const fullPath = path.join(docsDirectory, relativePath);
 
   if (!securePath(fullPath)) {
@@ -103,11 +104,11 @@ export function getDocData(slugParts: string[]): DocData | null {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  const category = data.category || (slugParts.length > 1 ? slugParts.slice(0, -1).join('/') : 'General');
+  const category = data.category || (decodedParts.length > 1 ? decodedParts.slice(0, -1).join('/') : 'General');
 
   return {
-    slug: slugParts.join('/'),
-    title: data.title || slugParts[slugParts.length - 1],
+    slug: decodedParts.join('/'),
+    title: data.title || decodedParts[decodedParts.length - 1],
     description: data.description || '',
     category,
     order: data.order !== undefined ? Number(data.order) : 99,
@@ -117,7 +118,8 @@ export function getDocData(slugParts: string[]): DocData | null {
 
 export function saveDocData(slugParts: string[], doc: Partial<DocData> & { content: string }): void {
   ensureDocsDir();
-  const relativePath = slugParts.join(path.sep) + '.md';
+  const decodedParts = slugParts.map(decodeURIComponent);
+  const relativePath = decodedParts.join(path.sep) + '.md';
   const fullPath = path.join(docsDirectory, relativePath);
 
   if (!securePath(fullPath)) {
@@ -131,9 +133,9 @@ export function saveDocData(slugParts: string[], doc: Partial<DocData> & { conte
   }
 
   const frontmatter = {
-    title: doc.title || slugParts[slugParts.length - 1],
+    title: doc.title || decodedParts[decodedParts.length - 1],
     description: doc.description || '',
-    category: doc.category || (slugParts.length > 1 ? slugParts.slice(0, -1).join('/') : 'General'),
+    category: doc.category || (decodedParts.length > 1 ? decodedParts.slice(0, -1).join('/') : 'General'),
     order: doc.order !== undefined ? Number(doc.order) : 99,
   };
 
@@ -185,7 +187,8 @@ export function createNewDoc(title: string, category: string, description: strin
 
 export function deleteDocFile(slugParts: string[]): boolean {
   ensureDocsDir();
-  const relativePath = slugParts.join(path.sep) + '.md';
+  const decodedParts = slugParts.map(decodeURIComponent);
+  const relativePath = decodedParts.join(path.sep) + '.md';
   const fullPath = path.join(docsDirectory, relativePath);
 
   if (!securePath(fullPath)) {

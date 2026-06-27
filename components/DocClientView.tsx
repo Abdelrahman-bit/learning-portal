@@ -66,28 +66,47 @@ export default function DocClientView({ initialDoc }: DocClientViewProps) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find all intersecting entries
-        const visibleEntries = entries.filter(e => e.isIntersecting);
-        if (visibleEntries.length > 0) {
-          // If multiple are visible, pick the first one (top-most)
-          setActiveId(visibleEntries[0].target.id);
-        }
+        // Track the most recently intersected entry
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
       },
       {
-        rootMargin: '-100px 0px -60% 0px',
-        threshold: 1.0
+        // Trigger when the header is within the top 40% of the screen, accounting for a fixed navbar
+        rootMargin: '-80px 0px -60% 0px',
+        threshold: 0
       }
     );
 
-    // Give the DOM a tiny bit to render the markdown IDs before observing
-    const timeout = setTimeout(() => {
+    const observedIds = new Set<string>();
+    
+    // Poll to ensure ReactMarkdown has finished rendering the DOM nodes
+    const interval = setInterval(() => {
       toc.forEach(item => {
-        const el = document.getElementById(item.id);
-        if (el) observer.observe(el);
+        if (!observedIds.has(item.id)) {
+          const el = document.getElementById(item.id);
+          if (el) {
+            observer.observe(el);
+            observedIds.add(item.id);
+          }
+        }
       });
-    }, 100);
+      
+      // Stop polling once all elements are found
+      if (observedIds.size === toc.length) {
+        clearInterval(interval);
+      }
+    }, 250);
+
+    // Safety timeout to clear interval just in case an ID was completely malformed
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 5000);
 
     return () => {
+      clearInterval(interval);
       clearTimeout(timeout);
       observer.disconnect();
     };

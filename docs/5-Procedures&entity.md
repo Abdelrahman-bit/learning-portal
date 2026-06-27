@@ -1105,24 +1105,41 @@ When entities are detected, several side-effects are triggered automatically:
 
 ```mermaid
 flowchart TD
-    A["Entity Detected"] --> B{"entity.sentiment?"}
-    B -->|Yes| C["conv.sentiment = entity.sentiment"]
+    %% Node Definitions
+    A["Entity Detected"]
+    B{"entity.sentiment?"}
+    C["conv.sentiment = entity.sentiment"]
+    D{"entity.action?"}
+    E["Execute actions (entity.action)"]
+    F{"entity.isNotify AND conv has handler?"}
+    G["Send notification to handler/team"]
+    H{"entity.isLabel?"}
+    I["Add entity.name to conv.aiLabels"]
+    J{"entity.overwritedLabels?"}
+    K["Remove listed labels from conv.aiLabels"]
+    L{"entity.intention?"}
+    M["Change Moonshot AI intention"]
+    N["Continue to step navigation"]
+
+    %% Edges
+    A --> B
+    B -->|Yes| C
     B -->|No| D
-    C --> D{"entity.action?"}
-    D -->|Yes| E"Execute actions[entity.action"]
+    C --> D
+    D -->|Yes| E
     D -->|No| F
-    E --> F{"entity.isNotify && conv has handler?"}
-    F -->|Yes| G["Send notification to handler/team"]
+    E --> F
+    F -->|Yes| G
     F -->|No| H
-    G --> H{"entity.isLabel?"}
-    H -->|Yes| I["Add entity.name to conv.aiLabels"]
+    G --> H
+    H -->|Yes| I
     H -->|No| J
-    I --> J{"entity.overwritedLabels?"}
-    J -->|Yes| K["Remove listed labels from conv.aiLabels"]
+    I --> J
+    J -->|Yes| K
     J -->|No| L
-    K --> L{"entity.intention?"}
-    L -->|Yes| M["Change Moonshot AI intention"]
-    L -->|No| N["Continue to step navigation"]
+    K --> L
+    L -->|Yes| M
+    L -->|No| N
     M --> N
 
     style A fill:#6c5ce7,color:#fff
