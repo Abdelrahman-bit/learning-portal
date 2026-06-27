@@ -46,19 +46,10 @@ const extractText = (node: any): string => {
 };
 
 export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRendererProps) {
-  const [mounted, setMounted] = useState(false);
   const [zoomContent, setZoomContent] = useState<React.ReactNode | null>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Pre-process custom highlights: ==word== to <mark class="accent-highlight">word</mark>
   const processedContent = content.replace(/==([^=]+)==/g, '<mark class="accent-highlight">$1</mark>');
-
-  if (!mounted) {
-    return <div className="loading-markdown">Loading documentation...</div>;
-  }
 
   const highlightStyle = theme === 'dark' ? materialDark : materialLight;
 

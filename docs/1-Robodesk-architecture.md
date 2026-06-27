@@ -4,11 +4,18 @@
 
 ---
 
+<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
+  <source src="/assets/1-Robodesk-architecture_RoboDesk_Architecture.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 ## 1. Platform Overview
 
 **RoboDesk** is an AI-first, omni-channel enterprise Customer Experience (CX) platform. It enables organizations to manage customer interactions across 20+ communication channels (WhatsApp, Facebook, Instagram, Email, SMS, Voice/SIP, Telegram, LinkedIn, and more) from a single unified agent workspace.
 
 The platform combines real-time messaging, AI-powered automation (via Moonshot), a ticketing system, quality control, workforce management, and deep analytics — all orchestrated through a monolithic Node.js backend that communicates with external AI services, databases, and message queues.
+
+![Platform_Architecture_Message_Journey_Flow-part1.png](/assets/1-Robodesk-architecture_Platform_Architecture_Message_Journey_Flow-part1.png)
 
 ### Key Capabilities
 
@@ -106,7 +113,7 @@ graph TB
 # RoboDesk Architecture — Part 2: Application Layer Deep Dive
 
 ---
-
+![Desk_Application_Technical_Architecture_Overview-part2.png](/assets/1-Robodesk-architecture_Desk_Application_Technical_Architecture_Overview-part2.png)
 ## 3. Web Application (Frontend)
 
 ### Tech Stack
@@ -365,6 +372,8 @@ Located in `Services/Usecases/`, these contain the business rules:
 
 ---
 
+![Data_Architecture__Operations_to_Analytics- part3.png](/assets/1-Robodesk-architecture_Data_Architecture__Operations_to_Analytics-_part3.png)
+
 ## 7. Real-Time Database (Redis)
 
 Redis serves **three critical roles** in RoboDesk simultaneously:
@@ -592,6 +601,8 @@ sequenceDiagram
 # RoboDesk Architecture — Part 4: AI, DevOps & Supporting Systems
 
 ---
+
+![RoboDesk_AI_and_DevOps_Architecture-part4.png](/assets/1-Robodesk-architecture_RoboDesk_AI_and_DevOps_Architecture-part4.png)
 
 ## 12. AI Layer — Moonshot
 
@@ -943,19 +954,3 @@ graph TB
 > [!TIP]
 **For new developers**: Start by understanding `main.js` (the application bootstrap), then explore the specific domain you'll work on through its Controller → Use Case → Repository chain. The conversation domain (`conversation.js` at each layer) is the most complex and the heart of the platform.
 >
-
----
-
-### Attached Media
-
-
-![Data_Architecture__Operations_to_Analytics- part3.png](/assets/1-Robodesk-architecture_Data_Architecture__Operations_to_Analytics-_part3.png)
-
-
-![Desk_Application_Technical_Architecture_Overview-part2.png](/assets/1-Robodesk-architecture_Desk_Application_Technical_Architecture_Overview-part2.png)
-
-
-![Platform_Architecture_Message_Journey_Flow-part1.png](/assets/1-Robodesk-architecture_Platform_Architecture_Message_Journey_Flow-part1.png)
-
-
-![RoboDesk_AI_and_DevOps_Architecture-part4.png](/assets/1-Robodesk-architecture_RoboDesk_AI_and_DevOps_Architecture-part4.png)

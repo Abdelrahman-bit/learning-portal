@@ -1,4 +1,4 @@
-import { getDocData } from '@/lib/docs';
+import { getDocData, getAllDocsList } from '@/lib/docs';
 import DocClientView from '@/components/DocClientView';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -7,6 +7,15 @@ interface DocPageProps {
   params: {
     slug: string[];
   };
+}
+
+// Statically pre-render all documentation pages at build time
+export async function generateStaticParams() {
+  const docs = getAllDocsList();
+  
+  return docs.map((doc) => ({
+    slug: doc.slug.split('/'),
+  }));
 }
 
 // Generate dynamic metadata for search engine optimization (SEO)
