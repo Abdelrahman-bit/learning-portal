@@ -2,6 +2,7 @@ import { getDocData, getAllDocsList } from '@/lib/docs';
 import DocClientView from '@/components/DocClientView';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 interface DocPageProps {
   params: {
@@ -43,5 +44,9 @@ export default function DocPage({ params }: DocPageProps) {
     notFound();
   }
 
-  return <DocClientView initialDoc={doc} />;
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-zinc-500">Loading document...</div>}>
+      <DocClientView initialDoc={doc} />
+    </Suspense>
+  );
 }

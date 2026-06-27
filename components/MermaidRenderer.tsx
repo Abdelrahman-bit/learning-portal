@@ -60,7 +60,7 @@ export default function MermaidRenderer({ chart, theme = 'dark' }: MermaidRender
         if (isMounted) {
           setSvg(renderedSvg);
         }
-      } catch (err: any) {
+      } catch (err) {
         console.warn('Mermaid rendering error: ', err);
         if (isMounted) {
           setError('Could not render diagram. Please verify Mermaid syntax.');

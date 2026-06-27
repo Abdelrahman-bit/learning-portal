@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { DocMetadata } from '@/lib/docs';
-import { Folder, FileText, Plus, ChevronDown, ChevronRight, Loader2, Home, Trash2, X, Sun, Moon } from 'lucide-react';
+import { Folder, FileText, ChevronDown, ChevronRight, Loader2, Home, X, Sun, Moon } from 'lucide-react';
 
 interface SidebarProps {
-  onNewDocClick: () => void;
+  onNewDocClick?: () => void;
   refreshTrigger?: number;
   sidebarOpen?: boolean;
   setSidebarOpen?: (open: boolean) => void;
@@ -16,9 +16,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ 
-  onNewDocClick, 
   refreshTrigger = 0,
-  sidebarOpen = false,
   setSidebarOpen,
   theme = 'dark',
   setTheme
@@ -27,7 +25,6 @@ export default function Sidebar({
   const [loading, setLoading] = useState(true);
   const [collapsedCategories, setCollapsedCategories] = useState<Record<string, boolean>>({});
   const pathname = usePathname();
-  const router = useRouter();
 
   const toggleTheme = () => {
     if (!setTheme) return;
@@ -87,30 +84,6 @@ export default function Sidebar({
     }
   }, [pathname, docs]);
 
-  const handleDelete = async (e: React.MouseEvent, slug: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (confirm(`Are you sure you want to delete this document: "${slug}"?`)) {
-      try {
-        const res = await fetch(`/api/docs/${slug}`, { method: 'DELETE' });
-        if (res.ok) {
-          // Direct users to home if deleting active page
-          if (pathname === getDocPath(slug)) {
-            router.push('/');
-          } else {
-            router.refresh();
-            // Force local reload by triggering pathname reload or setting local state
-            setDocs((prev) => prev.filter((d) => d.slug !== slug));
-          }
-        } else {
-          alert('Failed to delete document.');
-        }
-      } catch (err) {
-        console.error('Error deleting doc:', err);
-      }
-    }
-  };
 
   return (
     <aside className="docs-sidebar flex flex-col h-full">

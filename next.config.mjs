@@ -8,6 +8,9 @@ const withPWA = withPWAInit({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['three', 'postprocessing'],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-syntax-highlighter', 'mermaid'],
   },

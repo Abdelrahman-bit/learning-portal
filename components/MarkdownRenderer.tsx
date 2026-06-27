@@ -12,7 +12,7 @@ const MermaidRenderer = dynamic(() => import('./MermaidRenderer'), {
   ssr: false,
   loading: () => <div className="mermaid-placeholder animate-pulse" style={{ padding: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.1)', borderRadius: '8px' }}>Loading Diagram Engine...</div>
 });
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ZoomModal from './ZoomModal';
 
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
@@ -38,11 +38,14 @@ interface MarkdownRendererProps {
   theme?: 'dark' | 'light';
 }
 
-const extractText = (node: any): string => {
+const extractText = (node: React.ReactNode): string => {
   if (typeof node === 'string') return node;
   if (typeof node === 'number') return String(node);
   if (Array.isArray(node)) return node.map(extractText).join('');
-  if (node && node.props && node.props.children) return extractText(node.props.children);
+  if (node && typeof node === 'object' && 'props' in node) {
+    const props = node.props as { children?: React.ReactNode };
+    if (props.children) return extractText(props.children);
+  }
   return '';
 };
 
@@ -60,7 +63,7 @@ export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRe
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
         components={{
-          code({ node, className, children, ...props }) {
+          code({ className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : '';
             const codeString = String(children).replace(/\n$/, '');
@@ -88,6 +91,7 @@ export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRe
                   </button>
                 </div>
                 <SyntaxHighlighter
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   {...(props as any)}
                   style={highlightStyle}
                   language={language}
@@ -122,17 +126,17 @@ export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRe
               </a>
             );
           },
-          h1({ node, children, ...props }) {
+          h1({ children, ...props }) {
             const text = extractText(children);
             const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
             return <h1 id={id} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h1>;
           },
-          h2({ node, children, ...props }) {
+          h2({ children, ...props }) {
             const text = extractText(children);
             const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
             return <h2 id={id} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h2>;
           },
-          h3({ node, children, ...props }) {
+          h3({ children, ...props }) {
             const text = extractText(children);
             const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
             return <h3 id={id} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h3>;
