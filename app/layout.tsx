@@ -13,8 +13,18 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Modern Documentation Portal",
+  title: "RoboDesk Learning Portal",
   description: "A state-of-the-art interactive docs reader and editor featuring Mermaid, raw HTML embeds, syntax highlighting, and live rendering.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "RoboDesk Docs",
+  },
+};
+
+export const viewport = {
+  themeColor: "#00f2fe",
 };
 
 export default function RootLayout({

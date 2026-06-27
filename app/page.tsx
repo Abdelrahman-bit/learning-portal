@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getAllDocsList } from '@/lib/docs';
 import { FolderOpen, ArrowRight, FileText, Settings, PenTool, Sparkles } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import InstallPwaButton from '@/components/InstallPwaButton';
 const PixelBlast = dynamic(() => import('@/components/PixelBlast'), { ssr: false });
 
 export default function HomePage() {
@@ -38,7 +39,7 @@ export default function HomePage() {
             <p>
               Welcome to the RoboDesk technical documentation portal. Explore the system architecture, component modules, and deep dive into the inner workings of our AI-powered interaction management system.
             </p>
-            <div className="hero-ctas">
+            <div className="hero-ctas" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
               {docs.length > 0 ? (
                 <Link href={`/docs/${docs[0].slug}`} className="hero-btn btn-primary">
                   <span>Start Reading</span>
@@ -47,6 +48,7 @@ export default function HomePage() {
               ) : (
                 <div className="no-docs-warning">Create a page in the sidebar to get started!</div>
               )}
+              <InstallPwaButton />
             </div>
           </div>
         </section>
