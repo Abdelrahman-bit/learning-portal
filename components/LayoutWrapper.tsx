@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from './Sidebar';
-import Header from './Header';
 import { X, Loader2, Sparkles } from 'lucide-react';
 
 interface LayoutWrapperProps {
@@ -97,6 +96,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         refreshTrigger={refreshTrigger}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        theme={theme}
+        setTheme={handleSetTheme}
       />
 
       {/* Dimmed backdrop overlay for mobile when sidebar is open */}
@@ -107,13 +108,13 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         />
       )}
 
-      <div className="portal-main-area">
-        {/* Top search & theme header */}
-        <Header 
-          theme={theme} 
-          setTheme={handleSetTheme} 
-          onToggleSidebar={() => setSidebarOpen(true)}
-        />
+      <div className="portal-main-area relative">
+        <button 
+          className="md:hidden fixed top-4 right-4 z-50 p-2 bg-[var(--panel-bg)] backdrop-blur border border-[var(--panel-border)] rounded-md shadow-lg text-[var(--text-primary)]"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
 
         {/* Scrollable page body */}
         <main className="portal-page-body">

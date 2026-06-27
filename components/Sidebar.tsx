@@ -4,26 +4,37 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { DocMetadata } from '@/lib/docs';
-import { Folder, FileText, Plus, ChevronDown, ChevronRight, Loader2, Home, Trash2, X } from 'lucide-react';
+import { Folder, FileText, Plus, ChevronDown, ChevronRight, Loader2, Home, Trash2, X, Sun, Moon } from 'lucide-react';
 
 interface SidebarProps {
   onNewDocClick: () => void;
   refreshTrigger?: number;
   sidebarOpen?: boolean;
   setSidebarOpen?: (open: boolean) => void;
+  theme?: 'dark' | 'light';
+  setTheme?: (theme: 'dark' | 'light') => void;
 }
 
 export default function Sidebar({ 
   onNewDocClick, 
   refreshTrigger = 0,
   sidebarOpen = false,
-  setSidebarOpen
+  setSidebarOpen,
+  theme = 'dark',
+  setTheme
 }: SidebarProps) {
   const [docs, setDocs] = useState<DocMetadata[]>([]);
   const [loading, setLoading] = useState(true);
   const [collapsedCategories, setCollapsedCategories] = useState<Record<string, boolean>>({});
   const pathname = usePathname();
   const router = useRouter();
+
+  const toggleTheme = () => {
+    if (!setTheme) return;
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   // Load document directory listing
   useEffect(() => {
@@ -102,7 +113,7 @@ export default function Sidebar({
   };
 
   return (
-    <aside className="docs-sidebar">
+    <aside className="docs-sidebar flex flex-col h-full">
       <div className="sidebar-header">
         <Link href="/" className="sidebar-logo">
           <span className="logo-text">Learning Portal</span>
@@ -118,7 +129,7 @@ export default function Sidebar({
         )}
       </div>
 
-      <nav className="sidebar-nav">
+      <nav className="sidebar-nav flex-1 overflow-y-auto">
         <Link href="/" className={`sidebar-nav-item ${pathname === '/' ? 'active' : ''}`}>
           <Home size={16} className="nav-item-icon" />
           <span>Home Overview</span>
@@ -171,6 +182,16 @@ export default function Sidebar({
           })
         )}
       </nav>
+      
+      <div className="sidebar-footer mt-auto p-4 border-t border-[var(--panel-border)]">
+        <button 
+          onClick={toggleTheme} 
+          className="flex items-center gap-3 w-full p-2 rounded-md hover:bg-[var(--sidebar-hover)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          <span className="text-sm font-medium">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+        </button>
+      </div>
     </aside>
   );
 }
