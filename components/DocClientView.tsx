@@ -22,6 +22,7 @@ export default function DocClientView({ initialDoc }: DocClientViewProps) {
   const [doc, setDoc] = useState<DocData>(initialDoc);
   const [isEditing, setIsEditing] = useState(false);
   const [toc, setToc] = useState<TocItem[]>([]);
+  const [activeId, setActiveId] = useState<string>('');
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -39,13 +40,13 @@ export default function DocClientView({ initialDoc }: DocClientViewProps) {
   useEffect(() => {
     if (isEditing) return;
 
-    const lines = doc.content.split('\n');
+    const lines = doc.content.split(/\r?\n/);
     const items: TocItem[] = [];
 
     lines.forEach((line) => {
-      const match = line.match(/^(##|###)\s+(.+)$/);
+      const match = line.match(/^(#|##|###)\s+(.+)$/);
       if (match) {
-        const level = match[1].length; // 2 for h2, 3 for h3
+        const level = match[1].length; // 1 for h1, 2 for h2, 3 for h3
         const text = match[2].trim().replace(/[#*`_]/g, '');
         // Create an HTML anchor id from the text
         const id = text
@@ -58,6 +59,39 @@ export default function DocClientView({ initialDoc }: DocClientViewProps) {
 
     setToc(items);
   }, [doc.content, isEditing]);
+
+  // IntersectionObserver to highlight active section in TOC
+  useEffect(() => {
+    if (toc.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find all intersecting entries
+        const visibleEntries = entries.filter(e => e.isIntersecting);
+        if (visibleEntries.length > 0) {
+          // If multiple are visible, pick the first one (top-most)
+          setActiveId(visibleEntries[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-100px 0px -60% 0px',
+        threshold: 1.0
+      }
+    );
+
+    // Give the DOM a tiny bit to render the markdown IDs before observing
+    const timeout = setTimeout(() => {
+      toc.forEach(item => {
+        const el = document.getElementById(item.id);
+        if (el) observer.observe(el);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
+  }, [toc]);
 
   const handleSave = async (updatedData: DocData) => {
     // Disabled save handler
@@ -123,12 +157,16 @@ export default function DocClientView({ initialDoc }: DocClientViewProps) {
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className={`toc-item level-${item.level}`}
+                className={`toc-item level-${item.level} transition-colors ${activeId === item.id ? 'text-blue-500 font-semibold border-l-2 border-blue-500 pl-3' : 'text-gray-400 hover:text-gray-200 pl-4 border-l-2 border-transparent'}`}
+                style={{ paddingLeft: `${(item.level - 1) * 12 + 16}px` }}
                 onClick={(e) => {
                   e.preventDefault();
                   const el = document.getElementById(item.id);
                   if (el) {
                     el.scrollIntoView({ behavior: 'smooth' });
+                    // Update URL without jumping
+                    window.history.pushState(null, '', `#${item.id}`);
+                    setActiveId(item.id);
                   }
                 }}
               >

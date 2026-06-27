@@ -12,6 +12,7 @@ const MermaidRenderer = dynamic(() => import('./MermaidRenderer'), {
   loading: () => <div className="mermaid-placeholder animate-pulse" style={{ padding: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.1)', borderRadius: '8px' }}>Loading Diagram Engine...</div>
 });
 import { useEffect, useState } from 'react';
+import ZoomModal from './ZoomModal';
 
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
@@ -36,8 +37,17 @@ interface MarkdownRendererProps {
   theme?: 'dark' | 'light';
 }
 
+const extractText = (node: any): string => {
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join('');
+  if (node && node.props && node.props.children) return extractText(node.props.children);
+  return '';
+};
+
 export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRendererProps) {
   const [mounted, setMounted] = useState(false);
+  const [zoomContent, setZoomContent] = useState<React.ReactNode | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -109,11 +119,9 @@ export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRe
             );
           },
           a({ href, children }) {
-            // Handle documentation link routing mapping (e.g. ./getting-started.md -> /getting-started)
             let parsedHref = href || '';
             if (parsedHref.endsWith('.md')) {
               parsedHref = parsedHref.replace(/\.md$/, '').replace(/^\.\/?/, '');
-              // Prefix with docs root
               parsedHref = `/docs/${parsedHref}`;
             }
             return (
@@ -122,11 +130,32 @@ export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRe
               </a>
             );
           },
+          h1({ node, children, ...props }) {
+            const text = extractText(children);
+            const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            return <h1 id={id} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h1>;
+          },
+          h2({ node, children, ...props }) {
+            const text = extractText(children);
+            const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            return <h2 id={id} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h2>;
+          },
+          h3({ node, children, ...props }) {
+            const text = extractText(children);
+            const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            return <h3 id={id} style={{ scrollMarginTop: '100px' }} {...props}>{children}</h3>;
+          },
           img({ src, alt }) {
-            // Fallback for placeholder image or clean rendering
             const cleanSrc = src === '/docs/placeholder.jpg' ? 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop' : src;
             return (
-              <span className="img-container-custom">
+              <span 
+                className="img-container-custom cursor-pointer transition-transform hover:scale-[1.01] hover:shadow-lg relative group block"
+                onClick={() => setZoomContent(<img src={cleanSrc} alt={alt || 'Zoomed Image'} className="w-full h-auto object-contain rounded-lg shadow-2xl" />)}
+                title="Click to enlarge image"
+              >
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white text-xs px-2 py-1 rounded backdrop-blur z-10 pointer-events-none">
+                  Click to Zoom
+                </div>
                 <img src={cleanSrc} alt={alt || 'Image Documentation'} className="img-custom" />
                 {alt && <span className="img-caption">{alt}</span>}
               </span>
@@ -136,6 +165,10 @@ export default function MarkdownRenderer({ content, theme = 'dark' }: MarkdownRe
       >
         {processedContent}
       </ReactMarkdown>
+      
+      <ZoomModal isOpen={!!zoomContent} onClose={() => setZoomContent(null)}>
+        {zoomContent}
+      </ZoomModal>
     </div>
   );
 }
