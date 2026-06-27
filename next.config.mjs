@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['react-syntax-highlighter', 'mermaid', 'three', 'postprocessing'],
+  transpilePackages: ['three', 'postprocessing'],
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'react-syntax-highlighter', 'mermaid'],
   },
 };
 

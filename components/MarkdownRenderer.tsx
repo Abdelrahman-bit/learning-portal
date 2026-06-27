@@ -3,9 +3,14 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 import { materialDark, materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import MermaidRenderer from './MermaidRenderer';
+import dynamic from 'next/dynamic';
+
+const MermaidRenderer = dynamic(() => import('./MermaidRenderer'), {
+  ssr: false,
+  loading: () => <div className="mermaid-placeholder animate-pulse" style={{ padding: '2rem', textAlign: 'center', background: 'rgba(0,0,0,0.1)', borderRadius: '8px' }}>Loading Diagram Engine...</div>
+});
 import { useEffect, useState } from 'react';
 
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
