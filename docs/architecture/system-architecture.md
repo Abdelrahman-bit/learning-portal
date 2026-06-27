@@ -1,6 +1,8 @@
 ---
 title: System Architecture
-description: A deep dive into the folder structure, backend APIs, and react rendering lifecycle.
+description: >-
+  A deep dive into the folder structure, backend APIs, and react rendering
+  lifecycle.
 category: Architecture
 order: 1
 ---

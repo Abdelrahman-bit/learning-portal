@@ -1,72 +1,49 @@
 ---
 title: Getting Started
-description: Welcome to the Learning Portal! Learn how to navigate and manage documentation.
-category: Introduction
+description: >-
+  Welcome to the Learning Portal! Learn how to navigate and manage
+  documentation.
+category: General
 order: 1
 ---
 
 # Getting Started
 
-Welcome to the **Modern Documentation Portal**! This platform is designed to present complex technical documents in a sleek, user-friendly, and interactive environment.
+Welcome to the **RoboDesk Documentation Portal**! This platform is designed to present complex technical documents, system architectures, and feature guides in a sleek, user-friendly, and interactive environment.
 
-Here, you can easily read, search, edit, and create new document pages.
+Here, you can easily read, search, and navigate through the platform's robust technical documentation.
 
-## ⚡ Core Features
+## 📂 Documentation Architecture
 
-- **Markdown Support**: Full support for standard Markdown features (tables, lists, inline code).
-- **Mermaid Diagrams**: Render live diagrams directly from code blocks.
-- **Embedded Media**: Embed images, videos, or iframe blocks seamlessly.
-- **Dual-Pane Editor**: Edit documents in real-time with a live preview.
+To make finding information as intuitive as possible, our documentation is structured into the following categories:
 
----
+### 1. General Overview
+High-level overviews and foundational documents to get you acquainted with the platform.
+* [**Getting Started**](/docs/getting-started) - You are here!
+* [**Module Map**](/docs/module-map) - A high-level map of the entire RoboDesk ecosystem.
+* [**Technical Manual**](/docs/technical-manual) - Comprehensive technical documentation for developers and integrators.
 
-## 📊 Sample Mermaid Diagram
+### 2. Architecture
+Deep dives into the structural design, data flow, and server infrastructure of RoboDesk.
+* [**System Architecture**](/docs/architecture/system-architecture) - Broad overview of the system design.
+* [**RoboDesk Architecture**](/docs/architecture/robodesk-architecture) - Detailed, multi-part deep dive into the frontend, backend, data layers, and AI components.
 
-Here is a sequence diagram showcasing how the documentation portal fetches and compiles markdown content:
+### 3. Features
+Detailed breakdowns of specific platform capabilities, their logic, and how they operate.
+* [**Inbound & Outbound**](/docs/features/inbound-outbound) - How the system handles incoming and outgoing multi-channel communication.
+* [**Procedures & Entity**](/docs/features/procedures-entity) - Detailed explanation of Bot Procedures, Steps, and Natural Language Entities.
+* [**Channels & Adapters**](/docs/features/channels-adapters) - Overview of the Webhook integration and Adapter layer for connecting external channels (WhatsApp, Facebook, etc.).
+* [**Tickets & Workflow**](/docs/features/tickets-workflow) - How the internal ticketing, automations, and routing mechanisms operate.
 
-```mermaid
-sequenceDiagram
-    participant User as Web Browser
-    participant API as Next.js API Route
-    participant FS as Local Filesystem
-
-    User->>API: GET /api/docs/getting-started
-    API->>FS: Read docs/getting-started.md
-    FS-->>API: Return markdown content + YAML frontmatter
-    API-->>User: JSON (metadata, content)
-    User->>User: Compile Markdown & Hydrate Mermaid
-```
-
----
-
-## 🎨 Rich Styling & Highlighting
-
-We support highlighting important terms to guide your readers. For example, you can use <mark class="accent-highlight">essential concepts</mark> or ==critical details== to make information pop.
-
-Here's an example of standard code highlighting:
-
-```typescript
-// Sample function to print a welcome message
-function welcomeUser(name: string): string {
-  const greeting = `Welcome back, ${name}!`;
-  console.log(greeting);
-  return greeting;
-}
-```
+### 4. How To Guides
+Step-by-step practical guides for performing specific tasks on the platform.
+* [**How to Create a Procedure**](/docs/how-to/how-to-create-procedure) - A practical guide to building and deploying a bot procedure from scratch.
 
 ---
 
-## 🎥 Embedded Media
+## ⚡ Interactive Features
 
-### Image Demonstration
-Below is a demonstration layout representing the modern portal view:
-
-![Portal Interface](/docs/placeholder.jpg)
-
-### Video Demonstration
-You can also embed HTML5 videos or custom links:
-
-<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
-  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+This portal is designed to be highly interactive:
+- **Interactive Diagrams**: Click on any architectural diagram (Mermaid SVGs) or image to zoom in and explore the details.
+- **Table of Contents**: The right sidebar automatically highlights your current position as you scroll.
+- **Instant Search**: Use the search bar at the top to instantly find keywords across all documentation.

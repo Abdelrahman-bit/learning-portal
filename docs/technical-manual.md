@@ -1,30 +1,13 @@
+---
+category: General
+order: 2
+---
 # **RoboDesk V3 — Technical Reference Manual**
+
+![unnamed (2).png](/assets/3-Robodesk-technical-manual_unnamed_(2).png)
 
 > **Author:** Auto-generated from codebase analysis **Last Updated:** April 14, 2026 **For:** Abdelrahman Mohamed — Onboarding Reference
 > 
-
----
-
-## **Table of Contents**
-
-1. System Overview
-2. High-Level Architecture
-3. Directory Structure
-4. Application Bootstrap
-5. Layer-by-Layer Breakdown
-6. Channel Adapters
-7. Middleware Pipeline
-8. Dependency Injection
-9. Factory Pattern & Strategies
-10. Auto-Distribution Engine (ACD)
-11. Trigger & Action Commander
-12. Service Mesh & EventHub
-13. AI, NLP & Chatbot Engine
-14. Error Handling System
-15. Feature Modules Reference
-16. Data Flow: End-to-End Request Lifecycle
-17. Key Global Variables
-18. Tech Stack Summary
 
 ---
 
@@ -869,10 +852,3 @@ RoboDesk uses `global` extensively to share state across the monolith. Here ar
 
 > [!NOTE] This document is a living reference. As you explore deeper into specific modules, you can ask me to expand any section with more detail, code examples, or additional diagrams.
 >
-
----
-
-### Attached Media
-
-
-![unnamed (2).png](/assets/3-Robodesk-technical-manual_unnamed_(2).png)

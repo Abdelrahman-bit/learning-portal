@@ -1,3 +1,8 @@
+---
+category: Features
+order: 4
+title: Tickets & Workflows
+---
 # Robodesk-v3 Ticket System: Technical Deep Dive
 
 This guide provides a comprehensive overview of the ticketing system in Robodesk-v3, designed to help new developers understand its architecture, data models, and workflow mechanics.

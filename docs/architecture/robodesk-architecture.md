@@ -1,3 +1,7 @@
+---
+category: Architecture
+order: 2
+---
 # RoboDesk — AI-First Enterprise CX Platform
 
 ## High-Level Architecture Documentation

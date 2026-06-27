@@ -1,3 +1,7 @@
+---
+category: General
+order: 3
+---
 # **RoboDesk-V3 Module Map**
 
 Based on the structure of the database schemas (`/Core`) and the business logic (`/Services`), here is a comprehensive breakdown of the platform’s features and how the repository is organized.

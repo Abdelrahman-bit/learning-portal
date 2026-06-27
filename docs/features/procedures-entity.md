@@ -1,3 +1,8 @@
+---
+category: Features
+order: 2
+title: Procedures & Entity
+---
 # RoboDesk V3 — Procedure & Entity Module Documentation
 
 > **Module purpose:** A *Procedure* is the central automation blueprint in RoboDesk. It defines a conversational flow — a directed graph of **steps** — that the system walks through when interacting with customers across channels (WhatsApp, Facebook, Voice, etc.). Every inbound or outbound conversation is bound to exactly one procedure. An *Entity* is a detectable concept (keyword, regex pattern, or semantic unit) that the NLP engine matches against customer messages to drive step navigation, extract data, and trigger actions within a procedure.

@@ -1,3 +1,8 @@
+---
+category: How To
+order: 1
+title: How to Create a Procedure
+---
 # 🛠️ Ticket Inquiry — Procedure UI Walkthrough
 
 This is a step-by-step guide for configuring the `getTicketDetails` procedure flow in the RoboDesk UI.

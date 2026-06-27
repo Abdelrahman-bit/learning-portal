@@ -1,25 +1,18 @@
+---
+category: Features
+order: 1
+title: Inbound & Outbound
+---
 **Inbound & Outbound Deep Dive — WhatsApp Meta Edition**
 
 A detailed walkthrough of how messages flow through RoboDesk V3, using the **`whatsapp-meta.js`** adapter and **`control.js`** as the primary examples.
 
 ---
 
-**Table of Contents**
-
-1. The Big Picture
-2. Inbound Flow: Customer → RoboDesk
-3. Outbound Flow: RoboDesk → Customer
-4. Deep Dive: whatsapp-meta.js Adapter
-5. Deep Dive: control.js — The Brain
-6. The Procedure State Machine
-7. Bot Handover & AI Pipeline
-8. Dispatch / Scheduled Outbound Campaigns
-9. Status Webhooks & Delivery Tracking
-10. Key Method Reference Table
-
----
-
-https://drive.google.com/file/d/1fdsK71imtFBP2opdksRwj_SUMUyRzdVM/view?usp=sharing
+<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
+  <source src="/assets/4-Inpound&Outpound_RoboDesk_V3_Message_Path.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ### 1. The Big Picture
 
@@ -476,7 +469,7 @@ graph TD
     SWITCH -->|"message"| MSG["Prepare reply message from step template"]
     SWITCH -->|"break"| BRK["Send message, then auto-advance to next step"]
     SWITCH -->|"end"| END_STEP["Close conversation, update contact, close dispatches"]
-    SWITCH -->|"action"| ACTION"Execute actions[step.action, navigate to success/fail"]
+    SWITCH -->|"action"| ACTION["Execute actions (step.action, navigate to success/fail)"]
     SWITCH -->|"change bot"| CHG_BOT["Switch to AI bot — handover to Moonshot/Botpress"]
     SWITCH -->|"conditional"| COND["Evaluate regex conditions on conv attributes"]
     SWITCH -->|"failover"| FAIL["Execute failover action, set status"]
@@ -735,13 +728,3 @@ Quick-reference for the most important methods when debugging:
 - **`[FAILOVER-DECISION]`** — Bot decided to escalate/close
 - **`[SCHEDULE]`** — Outbound campaign processing
 - **`[EXPIRY-SET]`** — Step timer configured
-
----
-
-### Attached Media
-
-
-<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
-  <source src="/assets/4-Inpound&Outpound_RoboDesk_V3_Message_Path.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>

@@ -1,3 +1,8 @@
+---
+category: Features
+order: 3
+title: Channels & Adapters
+---
 # Understanding Core Concepts: Channels, Adapters, Triggers, and Actions
 
 https://drive.google.com/file/d/1Bv3sG7uOgF2wUK4T0SuNGrGISZE3L49Y/view?usp=sharing
