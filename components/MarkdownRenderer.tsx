@@ -4,7 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
-import { materialDark, materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import materialDark from 'react-syntax-highlighter/dist/esm/styles/prism/material-dark';
+import materialLight from 'react-syntax-highlighter/dist/esm/styles/prism/material-light';
 import dynamic from 'next/dynamic';
 
 const MermaidRenderer = dynamic(() => import('./MermaidRenderer'), {

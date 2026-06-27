@@ -650,17 +650,17 @@ html, body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.85rem 1.5rem;
-  background: var(--text-primary);
-  color: var(--background);
+  background: rgba(2, 132, 199, 0.85); /* Darkened bluish color */
+  color: #ffffff; /* White text for contrast */
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .hero-btn:hover {
   transform: translateX(2px);
-  opacity: 0.9;
+  background: rgba(117, 89, 143, 1); /* Solid purple on hover */
 }
 
 .no-docs-warning {

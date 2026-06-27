@@ -3,6 +3,12 @@ category: Features
 order: 2
 title: Procedures & Entity
 ---
+
+<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
+  <source src="/assets/5-Procedures&entity_Tracing_the_Call__Inside_the_RoboDesk_V3_Omnichannel_Execution_.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 # RoboDesk V3 — Procedure & Entity Module Documentation
 
 > **Module purpose:** A *Procedure* is the central automation blueprint in RoboDesk. It defines a conversational flow — a directed graph of **steps** — that the system walks through when interacting with customers across channels (WhatsApp, Facebook, Voice, etc.). Every inbound or outbound conversation is bound to exactly one procedure. An *Entity* is a detectable concept (keyword, regex pattern, or semantic unit) that the NLP engine matches against customer messages to drive step navigation, extract data, and trigger actions within a procedure.
@@ -39,9 +45,9 @@ title: Procedures & Entity
 
 ---
 
-# Overview Video:
+# Overview Image:
 
-https://drive.google.com/file/d/1hEYbnoOkhXOLJNDCggnaV8bq10s4eecH/view?usp=sharing
+![Procedures&entity .png](/assets/5-Procedures&entity_unnamed_(1).png)
 
 ## 1. Architecture Overview
 
@@ -1234,16 +1240,3 @@ After bulk entity changes (create/update/delete/add phrases), you should call `G
 | Controller | Services/Controllers/entity.js | REST API endpoints |
 
 ### Shared / Runtime Files
-
----
-
-### Attached Media
-
-
-<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
-  <source src="/assets/5-Procedures&entity_Tracing_the_Call__Inside_the_RoboDesk_V3_Omnichannel_Execution_.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
-
-
-![unnamed (1).png](/assets/5-Procedures&entity_unnamed_(1).png)

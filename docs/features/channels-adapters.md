@@ -5,7 +5,10 @@ title: Channels & Adapters
 ---
 # Understanding Core Concepts: Channels, Adapters, Triggers, and Actions
 
-https://drive.google.com/file/d/1Bv3sG7uOgF2wUK4T0SuNGrGISZE3L49Y/view?usp=sharing
+<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
+  <source src="/assets/6-Channels,-Adapters,-Triggers,-and-Actions_Channels_and_Adapters.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 Welcome to the Robodesk-v3 codebase! If you are a new developer, understanding how the system communicates with the outside world and how it executes dynamic workflows is essential.
 
@@ -90,13 +93,3 @@ The relationship between Triggers and Actions is managed by the **Trigger Action
 
 - **Adapters & Channels:** How the system connects to the world. Adapters are the code interfaces; Channels are the database configurations mapping that code to real-world accounts and identities.
 - **Triggers & Actions:** How the system automates internally. Triggers are the "When this happens" events; Actions are the conditional "Do this step" tasks that run when the event occurs.
-
----
-
-### Attached Media
-
-
-<video controls width="100%" style="border-radius: 8px; margin-top: 1rem;">
-  <source src="/assets/6-Channels,-Adapters,-Triggers,-and-Actions_Channels_and_Adapters.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>

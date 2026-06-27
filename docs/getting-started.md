@@ -25,7 +25,6 @@ High-level overviews and foundational documents to get you acquainted with the p
 
 ### 2. Architecture
 Deep dives into the structural design, data flow, and server infrastructure of RoboDesk.
-* [**System Architecture**](/docs/architecture/system-architecture) - Broad overview of the system design.
 * [**RoboDesk Architecture**](/docs/architecture/robodesk-architecture) - Detailed, multi-part deep dive into the frontend, backend, data layers, and AI components.
 
 ### 3. Features

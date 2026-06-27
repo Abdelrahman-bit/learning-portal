@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { getAllDocsList } from '@/lib/docs';
 import { FolderOpen, ArrowRight, FileText, Settings, PenTool, Sparkles } from 'lucide-react';
-import PixelBlast from '@/components/PixelBlast';
+import dynamic from 'next/dynamic';
+const PixelBlast = dynamic(() => import('@/components/PixelBlast'), { ssr: false });
 
 export default function HomePage() {
   const docs = getAllDocsList();
@@ -35,8 +36,7 @@ export default function HomePage() {
           <div className="hero-content">
             <h1>Knowledge Center</h1>
             <p>
-              Welcome to your documentation portal. Fully integrated with markdown editing, 
-              interactive Mermaid compile runtimes, and local Git-ready folder syncing.
+              Welcome to the RoboDesk technical documentation portal. Explore the system architecture, component modules, and deep dive into the inner workings of our AI-powered interaction management system.
             </p>
             <div className="hero-ctas">
               {docs.length > 0 ? (
