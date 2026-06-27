@@ -34,6 +34,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('beforeinstallprompt', function(e) {
+                e.preventDefault();
+                window.deferredPWAInstallPrompt = e;
+              });
+            `,
+          }}
+        />
+      </head>
       <body>
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>

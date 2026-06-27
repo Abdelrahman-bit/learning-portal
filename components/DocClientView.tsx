@@ -34,6 +34,28 @@ export default function DocClientView({ initialDoc }: DocClientViewProps) {
   // Sync state if initialDoc changes (e.g. route transitions)
   useEffect(() => {
     setDoc(initialDoc);
+    
+    // Track recently viewed docs in localStorage
+    try {
+      const MAX_RECENT = 10;
+      const recentDocsStr = localStorage.getItem('recent_docs') || '[]';
+      let recentDocs: string[] = JSON.parse(recentDocsStr);
+      
+      // Remove it if it's already in the list so we can move it to the top
+      recentDocs = recentDocs.filter(slug => slug !== initialDoc.slug);
+      
+      // Add to the front
+      recentDocs.unshift(initialDoc.slug);
+      
+      // Keep only top max
+      if (recentDocs.length > MAX_RECENT) {
+        recentDocs = recentDocs.slice(0, MAX_RECENT);
+      }
+      
+      localStorage.setItem('recent_docs', JSON.stringify(recentDocs));
+    } catch (e) {
+      console.error('Failed to update recent docs tracking', e);
+    }
   }, [initialDoc]);
 
   // Parse headers from markdown content to build Table of Contents

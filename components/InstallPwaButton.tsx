@@ -7,11 +7,15 @@ export default function InstallPwaButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
+    // Check if the event fired before React hydrated
+    if (typeof window !== 'undefined' && (window as any).deferredPWAInstallPrompt) {
+      setDeferredPrompt((window as any).deferredPWAInstallPrompt);
+    }
+
     const handleBeforeInstallPrompt = (e: Event) => {
-      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
-      // Stash the event so it can be triggered later.
       setDeferredPrompt(e);
+      (window as any).deferredPWAInstallPrompt = e;
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);

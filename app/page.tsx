@@ -3,6 +3,7 @@ import { getAllDocsList } from '@/lib/docs';
 import { FolderOpen, ArrowRight, FileText, Settings, PenTool, Sparkles } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import InstallPwaButton from '@/components/InstallPwaButton';
+import RecentDocuments from '@/components/RecentDocuments';
 const PixelBlast = dynamic(() => import('@/components/PixelBlast'), { ssr: false });
 
 export default function HomePage() {
@@ -98,28 +99,10 @@ export default function HomePage() {
           </div>
           {docs.length === 0 ? (
             <div className="empty-section-card">
-              <p>No documents found on disk.</p>
+              <p>No documents found.</p>
             </div>
           ) : (
-            <div className="recents-list">
-              {docs.slice(0, 5).map((doc) => (
-                <Link 
-                  key={doc.slug} 
-                  href={`/docs/${doc.slug}`} 
-                  className="recent-item-row"
-                >
-                  <div className="item-icon-wrapper">
-                    <FileText size={18} />
-                  </div>
-                  <div className="item-details">
-                    <h4>{doc.title}</h4>
-                    <p>{doc.description || 'No description provided.'}</p>
-                  </div>
-                  <div className="item-tag">{doc.category}</div>
-                  <ArrowRight size={16} className="row-arrow" />
-                </Link>
-              ))}
-            </div>
+            <RecentDocuments allDocs={docs} />
           )}
         </section>
       </div>
