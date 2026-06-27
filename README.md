@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 RoboDesk Learning Portal
 
-## Getting Started
+Welcome to the **RoboDesk Technical Documentation Portal**! This is a high-performance, Docs-as-Code platform built with Next.js to house the technical manuals, system architecture, and operational procedures for the RoboDesk AI-powered interaction management system.
 
-First, run the development server:
+## ✨ Features
+
+- **Docs-as-Code Architecture:** All documentation lives in a completely separated Git submodule repository. This ensures developers and technical writers can work independently without cross-repository interference.
+- **Interactive Mermaid Support:** Full support for rendering complex, full-width Mermaid.js flowchart and architecture diagrams directly from Markdown code blocks.
+- **Dynamic Syntax Highlighting:** Integrated code block highlighting with optimized, localized Prism themes for 100+ languages.
+- **Interactive Markdown Editing:** In-browser editing interface with live saving capabilities directly to the local file system.
+- **Next-Gen Aesthetics:** Features a stunning customized `Three.js` interactive background (`PixelBlast`), dynamic dark/light mode, and beautifully scaled typography using Tailwind CSS.
+- **Zoomable Media:** Automatically scales and provisions a sleek click-to-zoom modal for all embedded documentation imagery and system screenshots.
+
+## 🚀 Getting Started
+
+### Prerequisites
+Make sure you have Node.js 18+ installed on your system.
+
+### 1. Clone the Repository
+Because the documentation content is decoupled, you must clone this repository **with its submodules** to pull down the `.md` content files.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone --recurse-submodules https://github.com/your-org/learning-portal.git
+cd learning-portal
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*(If you already cloned it normally, you can initialize the submodule by running `git submodule update --init`)*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Run the Development Server
+```bash
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) with your browser to explore the documentation dashboard!
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+├── app/                  # Next.js App Router pages and global CSS
+├── components/           # Reusable React components (Sidebar, MarkdownRenderer, etc.)
+├── docs/                 # 🔗 GIT SUBMODULE: Contains all Markdown documentation content
+├── lib/                  # Utilities for parsing Markdown, Gray-matter, and file-system ops
+└── public/               # Static assets and media files
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ✍️ Writing Documentation
 
-## Deploy on Vercel
+To add or edit documentation, simply navigate to the `docs/` folder.
+- Documents are standard Markdown (`.md`) files.
+- We use **Frontmatter** to organize files automatically in the sidebar navigation:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```yaml
+---
+title: "My New Guide"
+description: "A short summary of what this guide covers."
+category: "Features"
+order: 2
+---
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Once you've made changes to the documentation, remember that the `docs/` directory is its own Git repository. You must commit and push changes inside the `docs/` folder independently of the main portal code!
+
+## 🛠 Tech Stack
+
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Markdown parsing:** `react-markdown`, `remark-gfm`, `rehype-raw`
+- **Diagrams:** [Mermaid.js](https://mermaid.js.org/)
+- **Visual Effects:** `Three.js` & `postprocessing`
